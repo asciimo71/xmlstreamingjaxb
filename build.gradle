@@ -1,0 +1,58 @@
+buildscript {
+    ext {
+    }
+    repositories {
+        maven {
+            credentials {
+                username "$mavenUser"
+                password "$mavenPassword"
+            }
+            url "http://www.beanfactory.de:8100/repository/maven-public/"
+        }
+        mavenCentral()
+    }
+    dependencies {
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven-publish'
+
+group = 'de.beanfactory.stax.xmlstream'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    maven {
+        credentials {
+            username "$mavenUser"
+            password "$mavenPassword"
+        }
+        url "http://www.beanfactory.de:8100/repository/maven-public/"
+    }
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.migesok:jaxb-java-time-adapters:1.1.3'
+    testCompile "junit:junit:4.11"
+    testCompileOnly group: 'org.projectlombok', name: 'lombok', version: '1.16.20'
+}
+
+publishing {
+    publications{
+        JavaService(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username "$mavenUser"
+                password "$mavenPassword"
+            }
+            url "http://www.beanfactory.de:8100/repository/maven-snapshots/"
+        }
+    }
+}
